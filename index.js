@@ -62,3 +62,5 @@ app.get('/webhook', (req, res) => {
     }
   }
 });
+
+//curl -X GET "https://nemsocialwallet.herokuapp.com/:8080/webhook?hub.verify_token=hei_verden&hub.challenge=CHALLENGE_ACCEPTED&hub.mode=subscribe"
