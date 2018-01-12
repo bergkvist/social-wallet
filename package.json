@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "description": "webhook for sow",
   "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -17,5 +13,9 @@
   "engines": {
     "node": "8.9.4",
     "npm": "5.6.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   }
 }
