@@ -49,6 +49,7 @@ app.post('/webhook', (req, res) => {
 
     // Iterate over each entry - there may be multiple if batched
     body.entry.forEach(function(entry) {
+    	console.log("hei")
 
       // Get the webhook event. entry.messaging is an array, but 
       // will only ever contain one event, so we get index 0
@@ -56,10 +57,8 @@ app.post('/webhook', (req, res) => {
       console.log(webhook_event);
 
       // Get the sender PSID
-      console.log("hei")
       let sender_psid = webhook_event.sender.id;
       console.log('Sender PSID: ' + sender_psid);
-      console.log("hoe")
 
       
     });
