@@ -47,10 +47,8 @@ app.post('/webhook', (req, res) => {
   // Check the webhook event is from a Page subscription
   if (body.object === 'page') {
 
-
-
-      
-    };
+    // Iterate over each entry - there may be multiple if batched
+    
 
     // Return a '200 OK' response to all events
     res.status(200).send('EVENT_RECEIVED');
