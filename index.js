@@ -114,7 +114,7 @@ function handleMessage(sender_psid, received_message,msg_nlp) {
   if (received_message.text) {    
     // Create the payload for a basic text message, which
     // will be added to the body of our request to the Send API
-    console.log(msg_nlp["intent"]["value"] + msg_nlp["intent"]["confidence"]);
+    console.log(msg_nlp["intent"][0]["value"] + msg_nlp["intent"][0]["confidence"]);
     if (msg_nlp["intent"]["value"] == "send" && msg_nlp["intent"]["confidence"] > 0.8){
       response = {
         "text": "Who do you want to send XEM to?"
