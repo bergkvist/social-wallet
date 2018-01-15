@@ -107,21 +107,35 @@ function handleMessage(sender_psid, received_message) {
   if (received_message.text) {    
     // Create the payload for a basic text message, which
     // will be added to the body of our request to the Send API
-    response = {
-      "text": "What do you want to do?",
-      "quick_replies":[
-        {
-          "content_type":"text",
-          "title":"Send XEM",
-          "payload":"send"
-        },
-        {
-          "content_type":"text",
-          "title":"Request XEM",
-          "payload":"request"
-        },
-      ]
+    if (received_message.text == "send"){
+      response = {
+        "text": "Who do you want to send XEM to?"
+      }
     }
+    else if (received_message.text == "request"){
+      response = {
+        "text": "Who do you want to request XEM from?"
+      }
+    }
+    else{
+      response = {
+        "text": "What do you want to do?",
+        "quick_replies":[
+          {
+            "content_type":"postback",
+            "title":"Send XEM",
+            "payload":"send"
+          },
+          {
+            "content_type":"postback",
+            "title":"Request XEM",
+            "payload":"request"
+          },
+        ]
+      }
+    }
+    
+    
   } 
   
   // Send the response message
