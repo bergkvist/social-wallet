@@ -56,9 +56,7 @@ app.post('/webhook', (req, res) => {
       // Check if the event is a message or postback and
       // pass the event to the appropriate handler function
       if (webhook_event.message) {
-        console.log("User intent: " + webhook_event.message.nlp.intent)
-        console.log("Amount of XEM to send: " + webhook_event.message.nlp.number)
-        console.log("To contact: " + webhook_event.message.nlp.contact)
+        console.log("User intent: " + JSON.stringify(webhook_event.message.nlp));
         handleMessage(sender_psid, webhook_event.message);  
             
       } else if (webhook_event.postback) {
