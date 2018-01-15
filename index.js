@@ -110,7 +110,7 @@ app.get('/webhook', (req, res) => {
 function handleMessage(sender_psid, received_message,msg_nlp) {
   let response;
   // Checks if the message contains text
-  if (received_message.text && msg_nlp !== "undefined") {    
+  if (received_message.text && msg_nlp !== undefined) {    
   // Create the payload for a basic text message, which
   // will be added to the body of our request to the Send AP
     if (msg_nlp["intent"][0]["value"] == "send"){
