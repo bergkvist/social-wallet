@@ -124,7 +124,7 @@ function handleMessage(sender_psid, received_message) {
           {
             "content_type":"text",
             "title":"Send XEM",
-            "payload":"send"
+            "payload":"request"
           },
           {
             "content_type":"text",
