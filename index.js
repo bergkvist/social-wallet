@@ -121,19 +121,27 @@ function handleMessage(sender_psid, received_message) {
     }
     else{
       response = {
-        "text": "What do you want to do?",
-        "buttons":[
-          {
-            "type":"postback",
-            "title":"Send XEM",
-            "payload":"send"
-          },
-          {
-            "type":"postback",
-            "title":"Request XEM",
-            "payload":"request"
+        "attachment": {
+          "type": "template",
+          "payload": {
+            "template_type": "generic",
+            "elements": [{
+              "title": "What do you want to do?",
+              "buttons":[
+                {
+                  "type":"postback",
+                  "title":"Send XEM",
+                  "payload":"send"
+                },
+                {
+                  "type":"postback",
+                  "title":"Request XEM",
+                  "payload":"request"
+                }
+              ]
+            }]
           }
-        ]
+        }
       }
     }
     
