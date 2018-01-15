@@ -53,9 +53,9 @@ app.post('/webhook', (req, res) => {
       let sender_psid = webhook_event.sender.id;
       console.log('Sender ID: ' + sender_psid);
       let msg_nlp = webhook_event.message.nlp.entities;
-      console.log('Intent: ' + JSON.stringify(msg_nlp));
-      console.log('Amount XEM: ' + msg_nlp[0]);
-      console.log('Recipient: ' + msg_nlp[0][0]);
+      console.log('Intent: ' + JSON.stringify(msg_nlp["intent"]));
+      console.log('Amount XEM: ' + JSON.stringify(msg_nlp["number"]));
+      console.log('Recipient: ' + JSON.stringify(msg_nlp["contact"]));
 
       // Check if the event is a message or postback and
       // pass the event to the appropriate handler function
