@@ -36,7 +36,8 @@ app.listen(process.env.PORT || 8080, () => console.log('webhook is listening'));
 app.post('/webhook', (req, res) => {  
 
   // Parse the request body from the POST
-  let body = req.body;
+  let body = req.body,
+  listen = false;
 
   // Check the webhook event is from a Page subscription
   if (body.object === 'page') {
@@ -55,7 +56,13 @@ app.post('/webhook', (req, res) => {
       // Check if the event is a message or postback and
       // pass the event to the appropriate handler function
       if (webhook_event.message) {
-        handleMessage(sender_psid, webhook_event.message);        
+        if (listen){
+          handleName(sender_psid, webhook_event.message);
+        }
+        else{
+          handleMessage(sender_psid, webhook_event.message);  
+        }
+              
       } else if (webhook_event.postback) {
         
         handlePostback(sender_psid, webhook_event.postback);
@@ -108,11 +115,13 @@ function handleMessage(sender_psid, received_message) {
     // Create the payload for a basic text message, which
     // will be added to the body of our request to the Send API
     if (received_message.text == "Send XEM"){
+      listen = true
       response = {
         "text": "Who do you want to send XEM to?"
       }
     }
     else if (received_message.text == "Request XEM"){
+      listen = true
       response = {
         "text": "Who do you want to request XEM from?"
       }
@@ -124,7 +133,7 @@ function handleMessage(sender_psid, received_message) {
           {
             "content_type":"text",
             "title":"Send XEM",
-            "payload":"request"
+            "payload":"send"
           },
           {
             "content_type":"text",
@@ -142,6 +151,25 @@ function handleMessage(sender_psid, received_message) {
   callSendAPI(sender_psid, response);    
 }
 
+function handleName(sender_psid,received_message){
+  response = {
+    "text": "What do you want to do?",
+    "quick_replies":[
+      {
+        "content_type":"text",
+        "title":"Correct",
+        "payload":"send"
+      },
+      {
+        "content_type":"False",
+        "title":"Request XEM",
+        "payload":"request"
+      }
+    ]
+  }
+  callSendAPI(sender_psid, response);
+}
+
 function handlePostback(sender_psid, received_postback) {
   console.log('ok')
    let response, nextState;
@@ -151,14 +179,11 @@ function handlePostback(sender_psid, received_postback) {
   // Set the response based on the postback payload
   if (payload === 'send') {
     response = { "text": "Who do you want to send XEM to?" }
-    nextState = "verifyName"
   } else if (payload === 'request') {
     response = { "text": "Who do you want to request XEM from?" }
-    nextState = "verifyName"
   }
   // Send the message to acknowledge the postback
   callSendAPI(sender_psid, response);
-  handleMessage(sender_psid,nextState)
 }
 
 function callSendAPI(sender_psid, response) {
