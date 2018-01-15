@@ -50,9 +50,10 @@ app.post('/webhook', (req, res) => {
 
 
       // Get the sender PSID
-      let sender_psid = webhook_event.sender.id;
+      let sender_psid = webhook_event.sender.id,
+      msg_nlp = webhook_event.message.nlp.entities;
+
       console.log('Sender ID: ' + sender_psid);
-      let msg_nlp = webhook_event.message.nlp.entities;
       console.log('Intent: ' + JSON.stringify(msg_nlp["intent"]));
       console.log('Amount XEM: ' + JSON.stringify(msg_nlp["number"]));
       console.log('Recipient: ' + JSON.stringify(msg_nlp["contact"]));
@@ -60,7 +61,7 @@ app.post('/webhook', (req, res) => {
       // Check if the event is a message or postback and
       // pass the event to the appropriate handler function
       if (webhook_event.message) {
-        handleMessage(sender_psid, webhook_event.message, webhook_event.nlp);  
+        handleMessage(sender_psid, webhook_event.message, msg_nlp);  
             
       } else if (webhook_event.postback) {
         handlePostback(sender_psid, webhook_event.postback);
@@ -113,7 +114,8 @@ function handleMessage(sender_psid, received_message,message_nlp) {
   if (received_message.text) {    
     // Create the payload for a basic text message, which
     // will be added to the body of our request to the Send API
-    if (received_message.text == "Send XEM"){
+    console.log(msg_nlp["intent"]["value"] + msg_nlp["intent"]["confidence"]);
+    if (msg_nlp["intent"]["value"] == "send" && msg_nlp["intent"]["confidence"] > 0.8){
       response = {
         "text": "Who do you want to send XEM to?"
       };
