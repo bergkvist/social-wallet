@@ -64,7 +64,6 @@ app.post('/webhook', (req, res) => {
         handleMessage(sender_psid, webhook_event.message, msg_nlp);  
             
       } else if (webhook_event.postback) {
-        console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
         handlePostback(sender_psid, webhook_event.postback);
 
       }
@@ -165,8 +164,13 @@ function handleMessage(sender_psid, received_message,msg_nlp) {
           }
         }
       };
-    }
-    else if(msg_nlp["greetings"][0]["value"] == "true"){
+    }else if(msg_nlp["intent"][0]["value"] == "help"){
+      response = {
+        "message": {
+          "text": 'Try writing like this: "send 100 XEM to John Doe", or "Request 100 XEM from Jane Doe". '
+        }
+      }
+    }else if(msg_nlp["greetings"][0]["value"] == "true"){
       response = {
         "message": {
           "text": 'Hi there!\nTry "send 100 XEM to John Doe", or "Request 100 XEM from Jane Doe". '
