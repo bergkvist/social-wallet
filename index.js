@@ -56,13 +56,8 @@ app.post('/webhook', (req, res) => {
       // Check if the event is a message or postback and
       // pass the event to the appropriate handler function
       if (webhook_event.message) {
-        if (self.listen){
-          handleName(sender_psid, webhook_event.message);
-        }
-        else{
-          handleMessage(sender_psid, webhook_event.message);  
-        }
-              
+        handleMessage(sender_psid, webhook_event.message);  
+            
       } else if (webhook_event.postback) {
         
         handlePostback(sender_psid, webhook_event.postback);
@@ -115,13 +110,11 @@ function handleMessage(sender_psid, received_message) {
     // Create the payload for a basic text message, which
     // will be added to the body of our request to the Send API
     if (received_message.text == "Send XEM"){
-      self.listen = true
       response = {
         "text": "Who do you want to send XEM to?"
       }
     }
     else if (received_message.text == "Request XEM"){
-      self.listen = true
       response = {
         "text": "Who do you want to request XEM from?"
       }
@@ -129,17 +122,17 @@ function handleMessage(sender_psid, received_message) {
     else{
       response = {
         "text": "What do you want to do?",
-        "quick_replies":[
+        "buttons":[
           {
-            "content_type":"text",
+            "type":"postback",
             "title":"Send XEM",
             "payload":"send"
           },
           {
-            "content_type":"text",
+            "type":"postback",
             "title":"Request XEM",
             "payload":"request"
-          },
+          }
         ]
       }
     }
