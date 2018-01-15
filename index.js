@@ -107,12 +107,12 @@ function handleMessage(sender_psid, received_message) {
   if (received_message.text) {    
     // Create the payload for a basic text message, which
     // will be added to the body of our request to the Send API
-    if (received_message.text == "send"){
+    if (received_message.text == "Send XEM"){
       response = {
         "text": "Who do you want to send XEM to?"
       }
     }
-    else if (received_message.text == "request"){
+    else if (received_message.text == "Request XEM"){
       response = {
         "text": "Who do you want to request XEM from?"
       }
