@@ -62,17 +62,6 @@ function handlePostback(sender_psid, received_postback) {
 
 }
 
-// Sends response messages via the Send API
-function callSendAPI(sender_psid, response) {
-  // Construct the message body
-  let request_body = {
-    "recipient": {
-      "id": sender_psid
-    },
-    "message": response
-  }
-}
-
   // Send the HTTP request to the Messenger Platform
   request({
     "uri": "https://graph.facebook.com/v2.6/me/messages",
@@ -88,6 +77,17 @@ function callSendAPI(sender_psid, response) {
   }); 
 
 });
+
+// Sends response messages via the Send API
+function callSendAPI(sender_psid, response) {
+  // Construct the message body
+  let request_body = {
+    "recipient": {
+      "id": sender_psid
+    },
+    "message": response
+  }
+}
 
 // Creates the endpoint for our webhook 
 app.post('/webhook', (req, res) => {  
