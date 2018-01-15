@@ -50,17 +50,20 @@ app.post('/webhook', (req, res) => {
 
 
       // Get the sender PSID
-      let sender_psid = webhook_event.sender.id,
-      msg_nlp = webhook_event.message.nlp.entities;
+      let sender_psid = webhook_event.sender.id;
+      
+      if (webhook_event.message.nlp !== undefined){
+        let msg_nlp = webhook_event.message.nlp.entities;
 
       console.log('Sender ID: ' + sender_psid);
       console.log('Intent: ' + JSON.stringify(msg_nlp["intent"]));
       console.log('Amount XEM: ' + JSON.stringify(msg_nlp["number"]));
       console.log('Recipient: ' + JSON.stringify(msg_nlp["contact"]));
+      }
 
       // Check if the event is a message or postback and
       // pass the event to the appropriate handler function
-      if (webhook_event.message) {
+      if (webhook_event.message && webhook_event.message.nlp !== undefined) {
         handleMessage(sender_psid, webhook_event.message, msg_nlp);  
             
       } else if (webhook_event.postback) {
