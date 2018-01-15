@@ -52,12 +52,14 @@ app.post('/webhook', (req, res) => {
       // Get the sender PSID
       let sender_psid = webhook_event.sender.id;
       console.log('Sender ID: ' + sender_psid);
+      console.log('Intent: ' + webhook_event.nlp.entities["intent"][0])
+      console.log('Amount XEM: ' + webhook_event.nlp.entities["number"][0])
+      console.log('Recipient: ' + webhook_event.nlp.entities["contact"][0])
 
       // Check if the event is a message or postback and
       // pass the event to the appropriate handler function
       if (webhook_event.message) {
-        console.log("User intent: " + JSON.stringify(webhook_event.message.nlp));
-        handleMessage(sender_psid, webhook_event.message);  
+        handleMessage(sender_psid, webhook_event.message, webhook_event.nlp);  
             
       } else if (webhook_event.postback) {
         handlePostback(sender_psid, webhook_event.postback);
@@ -103,7 +105,7 @@ app.get('/webhook', (req, res) => {
   }
 });
 
-function handleMessage(sender_psid, received_message) {
+function handleMessage(sender_psid, received_message,message_nlp) {
   let response;
   
   // Checks if the message contains text
@@ -127,7 +129,7 @@ function handleMessage(sender_psid, received_message) {
           "payload": {
             "template_type": "generic",
             "elements": [{
-              "title": "What do you want to do?",
+              "title": "Confirm transaction:",
               "buttons":[
                 {
                   "type":"postback",
@@ -136,8 +138,8 @@ function handleMessage(sender_psid, received_message) {
                 },
                 {
                   "type":"postback",
-                  "title":"Request XEM",
-                  "payload":"request"
+                  "title":"Cancel transaction",
+                  "payload":"cancel"
                 }
               ]
             }]
@@ -158,10 +160,10 @@ function handlePostback(sender_psid, received_postback) {
 
   // Set the response based on the postback payload
   if (payload === 'send') {
-    response = { "text": "Who do you want to send XEM to?" }; //TODO: CREATE PAYMENT JSON
+    response = { "text": "Payment sent" }; //TODO: CREATE PAYMENT JSON
     
-  } else if (payload === 'request') {
-    response = { "text": "Who do you want to request XEM from?" }; //TODO: CREATE PAYMENT JSON
+  } else if (payload === 'cancel') {
+    response = { "text": "Payment canceled" }; //TODO: CREATE PAYMENT JSON
   }
   // Send the message to acknowledge the postback
   callSendAPI(sender_psid, response);
