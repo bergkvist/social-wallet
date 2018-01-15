@@ -172,6 +172,7 @@ function handleMessage(sender_psid, received_message,msg_nlp) {
         "message": {
           "text": 'Hi there!\nTry "send 100 XEM to John Doe", or "Request 100 XEM from Jane Doe". '
         }
+      }
     }
     else{
       response = {
