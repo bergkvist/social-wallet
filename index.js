@@ -110,7 +110,8 @@ app.get('/webhook', (req, res) => {
 function handleMessage(sender_psid, received_message,msg_nlp) {
   let response;
   
-  // Checks if the message contains text
+  try{
+    // Checks if the message contains text
   if (received_message.text) {    
     // Create the payload for a basic text message, which
     // will be added to the body of our request to the Send API
@@ -182,6 +183,12 @@ function handleMessage(sender_psid, received_message,msg_nlp) {
       }
     }
   } 
+  }catch(e){
+    response = {
+      "message": {
+        "text": 'Sorry, I do not understand what you wrote. Please try again!\nTry "send 100 XEM to John Doe", or "Request 100 XEM from Jane Doe". '
+      }
+  }
   // Send the response message
   callSendAPI(sender_psid, response);    
 }
