@@ -100,6 +100,13 @@ app.get('/webhook', (req, res) => {
   }
 });
 
+function chatFSM(received_message, state) {
+  if (state == "help"){
+    return "HELP COMMANDS HERE"
+  }
+  
+}
+
 function handleMessage(sender_psid, received_message) {
   let response;
   
@@ -108,30 +115,22 @@ function handleMessage(sender_psid, received_message) {
     // Create the payload for a basic text message, which
     // will be added to the body of our request to the Send API
     response = {
-      "text": `You sent the message: "${received_message.text}". Now send me an attachment!`
-    }
-  } else if (received_message.attachments) {
-    // Get the URL of the message attachment
-    let attachment_url = received_message.attachments[0].payload.url;
-    response = {
       "attachment": {
         "type": "template",
         "payload": {
           "template_type": "generic",
           "elements": [{
-            "title": "Is this the right picture?",
-            "subtitle": "Tap a button to answer.",
-            "image_url": attachment_url,
+            "title": "What do you want to do?",
             "buttons": [
               {
                 "type": "postback",
-                "title": "Yes!",
-                "payload": "yes",
+                "title": "Send",
+                "payload": "send",
               },
               {
                 "type": "postback",
-                "title": "No!",
-                "payload": "no",
+                "title": "Request",
+                "payload": "request",
               }
             ],
           }]
@@ -151,10 +150,10 @@ function handlePostback(sender_psid, received_postback) {
   let payload = received_postback.payload;
 
   // Set the response based on the postback payload
-  if (payload === 'yes') {
-    response = { "text": "Thanks!" }
-  } else if (payload === 'no') {
-    response = { "text": "Oops, try sending another image." }
+  if (payload === 'send') {
+    response = { "text": "Who do you want to send XEM to?" }
+  } else if (payload === 'request') {
+    response = { "text": "Who do you want to request XEM from?" }
   }
   // Send the message to acknowledge the postback
   callSendAPI(sender_psid, response);
