@@ -143,25 +143,6 @@ function handleMessage(sender_psid, received_message) {
   callSendAPI(sender_psid, response);    
 }
 
-function handleName(sender_psid,received_message){
-  response = {
-    "text": `Is this name correct "${received_message.text}"?`,
-    "quick_replies":[
-      {
-        "content_type":"text",
-        "title":"Yes",
-        "payload":"true"
-      },
-      {
-        "content_type":"text",
-        "title":"No",
-        "payload":"false"
-      }
-    ]
-  }
-  callSendAPI(sender_psid, response);
-}
-
 function handlePostback(sender_psid, received_postback) {
   console.log('ok')
    let response, nextState;
@@ -171,6 +152,7 @@ function handlePostback(sender_psid, received_postback) {
   // Set the response based on the postback payload
   if (payload === 'send') {
     response = { "text": "Who do you want to send XEM to?" }
+    console.log("yeee boiii")
   } else if (payload === 'request') {
     response = { "text": "Who do you want to request XEM from?" }
   }
