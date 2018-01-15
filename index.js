@@ -100,13 +100,6 @@ app.get('/webhook', (req, res) => {
   }
 });
 
-function chatFSM(received_message, state) {
-  if (state == "help"){
-    return "HELP COMMANDS HERE"
-  }
-  
-}
-
 function handleMessage(sender_psid, received_message) {
   let response;
   
@@ -115,27 +108,19 @@ function handleMessage(sender_psid, received_message) {
     // Create the payload for a basic text message, which
     // will be added to the body of our request to the Send API
     response = {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "generic",
-          "elements": [{
-            "title": "What do you want to do?",
-            "buttons": [
-              {
-                "type": "postback",
-                "title": "Send",
-                "payload": "send",
-              },
-              {
-                "type": "postback",
-                "title": "Request",
-                "payload": "request",
-              }
-            ],
-          }]
-        }
-      }
+      "text": "What do you want to do?",
+      "quick_replies":[
+        {
+          "content_type":"text",
+          "title":"Send XEM",
+          "payload":"send"
+        },
+        {
+          "content_type":"text",
+          "title":"Request XEM",
+          "payload":"request"
+        },
+      ]
     }
   } 
   
@@ -145,18 +130,21 @@ function handleMessage(sender_psid, received_message) {
 
 function handlePostback(sender_psid, received_postback) {
   console.log('ok')
-   let response;
+   let response, nextState;
   // Get the payload for the postback
   let payload = received_postback.payload;
 
   // Set the response based on the postback payload
   if (payload === 'send') {
     response = { "text": "Who do you want to send XEM to?" }
+    nextState = "verifyName"
   } else if (payload === 'request') {
     response = { "text": "Who do you want to request XEM from?" }
+    nextState = "verifyName"
   }
   // Send the message to acknowledge the postback
   callSendAPI(sender_psid, response);
+  handleMessage(sender_psid,nextState)
 }
 
 function callSendAPI(sender_psid, response) {
