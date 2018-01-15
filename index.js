@@ -124,7 +124,7 @@ function handleMessage(sender_psid, received_message,msg_nlp) {
             "template_type": "generic",
             "elements": [{
               "title": "Confirm transaction:",
-              "subtitle":'Send ${msg_nlp["number"][0]["value"]} XEM to ${msg_nlp["contact"][0]["value"]}',
+              "subtitle":`Send ${msg_nlp["number"][0]["value"]} XEM to ${msg_nlp["contact"][0]["value"]}`,
               "buttons":[
                 {
                   "type":"postback",
@@ -150,7 +150,7 @@ function handleMessage(sender_psid, received_message,msg_nlp) {
             "template_type": "generic",
             "elements": [{
               "title": "Confirm transaction:",
-              "subtitle":'Request ${msg_nlp["number"][0]["value"]} XEM from ${msg_nlp["contact"][0]["value"]}',
+              "subtitle":`Request ${msg_nlp["number"][0]["value"]} XEM from ${msg_nlp["contact"][0]["value"]}`,
               "buttons":[
                 {
                   "type":"postback",
