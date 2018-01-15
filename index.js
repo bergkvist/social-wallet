@@ -189,6 +189,7 @@ function handleMessage(sender_psid, received_message,msg_nlp) {
         "text": 'Sorry, I do not understand what you wrote. Please try again!\nTry "send 100 XEM to John Doe", or "Request 100 XEM from Jane Doe". '
       }
   }
+}
   // Send the response message
   callSendAPI(sender_psid, response);    
 }
