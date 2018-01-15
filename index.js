@@ -122,12 +122,12 @@ function handleMessage(sender_psid, received_message) {
         "text": "What do you want to do?",
         "quick_replies":[
           {
-            "content_type":"postback",
+            "content_type":"text",
             "title":"Send XEM",
             "payload":"send"
           },
           {
-            "content_type":"postback",
+            "content_type":"text",
             "title":"Request XEM",
             "payload":"request"
           },
