@@ -107,7 +107,7 @@ app.get('/webhook', (req, res) => {
   }
 });
 
-function handleMessage(sender_psid, received_message,message_nlp) {
+function handleMessage(sender_psid, received_message,msg_nlp) {
   let response;
   
   // Checks if the message contains text
