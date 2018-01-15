@@ -60,7 +60,9 @@ app.post('/webhook', (req, res) => {
 
       // Check if the event is a message or postback and
       // pass the event to the appropriate handler function
-      if (webhook_event.message) {
+      if(webhook_event.nlp === "undefined"){
+
+      } else if (webhook_event.message) {
         handleMessage(sender_psid, webhook_event.message, msg_nlp);  
             
       } else if (webhook_event.postback) {
@@ -109,13 +111,10 @@ app.get('/webhook', (req, res) => {
 
 function handleMessage(sender_psid, received_message,msg_nlp) {
   let response;
-  
-  try{
-    // Checks if the message contains text
-  if (received_message.text) {    
-    // Create the payload for a basic text message, which
-    // will be added to the body of our request to the Send API
-
+  // Checks if the message contains text
+  if (received_message.text && msg.nlp) {    
+  // Create the payload for a basic text message, which
+  // will be added to the body of our request to the Send AP
     if (msg_nlp["intent"][0]["value"] == "send"){
       response = {
         "attachment": {
@@ -175,21 +174,14 @@ function handleMessage(sender_psid, received_message,msg_nlp) {
         }
       }
     }
-    else{
-      response = {
-        "message": {
-          "text": 'Sorry, I do not understand what you wrote. Please try again!\nTry "send 100 XEM to John Doe", or "Request 100 XEM from Jane Doe". '
-        }
-      }
-    }
-  } 
-  }catch(e){
+  }else {
     response = {
       "message": {
         "text": 'Sorry, I do not understand what you wrote. Please try again!\nTry "send 100 XEM to John Doe", or "Request 100 XEM from Jane Doe". '
       }
+    }
   }
-}
+  
   // Send the response message
   callSendAPI(sender_psid, response);    
 }
