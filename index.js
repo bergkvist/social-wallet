@@ -153,17 +153,17 @@ function handleMessage(sender_psid, received_message) {
 
 function handleName(sender_psid,received_message){
   response = {
-    "text": "What do you want to do?",
+    "text": `Is this name correct "${received_message.text}"?`,
     "quick_replies":[
       {
         "content_type":"text",
-        "title":"Correct",
-        "payload":"send"
+        "title":"Yes",
+        "payload":"true"
       },
       {
-        "content_type":"False",
-        "title":"Request XEM",
-        "payload":"request"
+        "content_type":"text",
+        "title":"No",
+        "payload":"false"
       }
     ]
   }
