@@ -165,25 +165,16 @@ function handleMessage(sender_psid, received_message,msg_nlp) {
       };
     }else {
       //HELP RESPONSE
-      response = {
-        "message": {
-          "text": 'Try writing like this: "send 100 XEM to John Doe", or "Request 100 XEM from Jane Doe". '
-        }
+      response = { "text": 'Try writing like this: "send 100 XEM to John Doe", or "Request 100 XEM from Jane Doe". '
       };
     }
   } else if (msg_nlp && msg_nlp["greetings"]){
     //GREETING RESPONSE
-    response = {
-      "message": {
-        "text": 'Hi there!\nTry "send 100 XEM to John Doe", or "Request 100 XEM from Jane Doe". '
-      }
+    response = {"text": 'Hi there!\nTry "send 100 XEM to John Doe", or "Request 100 XEM from Jane Doe". '
     };
   } else{
     //Sorry, didn't understand that
-    response = {
-      "message": {
-        "text": 'Sorry, I do not understand what you wrote. Please try again!\nTry "send 100 XEM to John Doe", or "Request 100 XEM from Jane Doe". '
-      }
+    response = {"text": 'Sorry, I do not understand what you wrote. Please try again!\nTry "send 100 XEM to John Doe", or "Request 100 XEM from Jane Doe". '
     };
   };
   // Send the response message
