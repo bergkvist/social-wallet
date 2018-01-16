@@ -110,7 +110,7 @@ app.get('/webhook', (req, res) => {
 function handleMessage(sender_psid, received_message,msg_nlp) {
   let response;
 
-  if (msg_nlp["intent"][0]["value"] !== undefined){
+  if (msg_nlp && msg_nlp["intent"] !== undefined){
     //help, send, request
     let intent = msg_nlp["intent"][0]["value"];
     if (intent === "send"){
@@ -171,7 +171,7 @@ function handleMessage(sender_psid, received_message,msg_nlp) {
         }
       };
     }
-  } else if (["greetings"][0]["value"] !== undefined){
+  } else if (msg_nlp && msg_nlp["greetings"]){
     //GREETING RESPONSE
     response = {
       "message": {
