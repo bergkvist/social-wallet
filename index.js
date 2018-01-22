@@ -167,13 +167,25 @@ function handleMessage(sender_psid, received_message,msg_nlp) {
       //LOGIN RESPONSE
     }else if(intent === "login"){
       response = {
-        "buttons":[
-          {
-            "type": "account_link",
-            "url": "https://folk.ntnu.no/matsjsk"
+        "attachment": {
+          "type": "template",
+          "payload": {
+            "template_type": "generic",
+            "elements": [{
+              "title": "Log In",
+              "buttons":[
+                {
+                  "type": "account_link",
+                  "url": "https://folk.ntnu.no/matsjsk"
+                }
+              ]
+            }
+            ]
           }
-        ]
-      }
+        }
+      };
+
+        
       //LOGOUT RESPONSE
     }else if(intent === "logout"){
 
