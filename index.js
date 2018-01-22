@@ -62,7 +62,7 @@ app.post('/webhook', (req, res) => {
         console.log('Amount XEM: ' + JSON.stringify(msg_nlp["number"]));
         console.log('Recipient: ' + JSON.stringify(msg_nlp["contact"]));
         console.log('Recipient: ' + JSON.stringify(msg_nlp["greetings"]));
-        handleMessage(sender_psid, webhook_event.message, msg_nlp);  
+        handleMessage(sender_psid, webhook_event.message, msg_nlp);
             
       } else if (webhook_event.postback) {
         handlePostback(sender_psid, webhook_event.postback);
@@ -114,7 +114,7 @@ function handleMessage(sender_psid, received_message,msg_nlp) {
   if (msg_nlp && msg_nlp["intent"] !== undefined){
     //help, send, request
     let intent = msg_nlp["intent"][0]["value"];
-    if (intent === "send"){
+    if (intent === "send" && msg_nlp["number"] && msg_nlp["contact"]){
       response = {
         "attachment": {
           "type": "template",
