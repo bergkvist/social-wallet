@@ -112,7 +112,7 @@ function handleMessage(sender_psid, received_message,msg_nlp) {
   let response;
 
   if (msg_nlp && msg_nlp["intent"] !== undefined){
-    //help, send, request
+    //help, send, request, log in, log out
     let intent = msg_nlp["intent"][0]["value"];
     if (intent === "send" && msg_nlp["number"] && msg_nlp["contact"]){
       response = {
@@ -164,6 +164,19 @@ function handleMessage(sender_psid, received_message,msg_nlp) {
           }
         }
       };
+      //LOGIN RESPONSE
+    }else if(intent === "login"){
+      response = {
+        "buttons":[
+          {
+            "type": "account_link",
+            "url": "https://folk.ntnu.no/matsjsk"
+          }
+        ]
+      }
+      //LOGOUT RESPONSE
+    }else if(intent === "logout"){
+
     }else {
       //HELP RESPONSE
       response = { "text": 'Try writing like this: "send 100 XEM to John Doe", or "Request 100 XEM from Jane Doe". '
