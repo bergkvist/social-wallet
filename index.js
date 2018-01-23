@@ -246,5 +246,13 @@ function callSendAPI(sender_psid, response) {
       console.error("Unable to send message:" + err);
     }
   });
-  
+  FB.api(
+    '/10155107388460703',
+    'GET',
+    {},
+    function(response) {
+        // Insert your code here
+        console.log(JSON.stringify(response));
+    }
+  );
 }
