@@ -10,7 +10,6 @@ import sendApi from './send';
 
 // ===== STORES ================================================================
 import UserStore from '../stores/user_store';
-import messages from './messages';
 
 /*
  * Account Link Event - This event is called when the Link Account
@@ -64,15 +63,6 @@ const handleReceivePostback = (event) => {
   switch (type) {
   case 'GET_STARTED':
     sendApi.sendWelcomeMessage(senderId);
-    break;
-  case 'send':
-    sendApi.sendMessage(senderId,messages.sentMSG);
-    break;
-  case 'cancel':
-    sendApi.sendMessage(senderId,messages.cancelTransaction);
-    break;
-    case 'request':
-    sendApi.sendMessage(senderId,messages.requestMSG);
     break;
   default:
     console.error(`Unknown Postback called: ${type}`);

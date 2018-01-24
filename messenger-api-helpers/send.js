@@ -64,7 +64,8 @@ const sendLoggedOutWelcomeMessage = (recipientId) => {
   sendMessage(
     recipientId, [
       {
-        text: 'Hi! 👋 Welcome to SocialWallet!',
+        text: 'Hi! 👋 Welcome to Jasper’s Market!'
+          + ' (Messenger Platform Account Linking demo)',
       },
       messages.createAccountMessage,
     ]

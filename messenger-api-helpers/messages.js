@@ -32,7 +32,7 @@ const createAccountMessage = {
     type: 'template',
     payload: {
       template_type: 'button',
-      text: 'Log into your SocialWallet to start sending your friends XEM.',
+      text: 'Ready to do this? You’ll need to log in to your Jasper’s account so I can access your past orders.',
       buttons: [signInButton],
     },
   },
@@ -61,7 +61,7 @@ const signInSuccessMessage = {
     type: 'template',
     payload: {
       template_type: 'button',
-      text: 'Happy transacting!',
+      text: 'Now you’ll have full access to your order history and shopping list.',
       buttons: [signOutButton],
     },
   },
@@ -75,7 +75,7 @@ const signOutSuccessMessage = {
     type: 'template',
     payload: {
       template_type: 'button',
-      text: 'You’ve been logged out of your SocialWallet account.',
+      text: 'You’ve been logged out of your Jasper’s account.',
       buttons: [signInButton],
     },
   },
@@ -121,78 +121,6 @@ const getStarted = {
     },
   ],
 };
-/**
- * Send button
- */
-const sendXEM = {
-  attachment: {
-    type: 'template',
-    payload: {
-      template_type: 'generic',
-      elements: {
-        title: "Confirm transaction:",
-        subtitle: `Send XXX XEM to XXX`,
-        buttons: [{
-          type: "postback",
-          title: "Send XEM",
-          payload: "send"
-        },{
-          type: "postback",
-          title: "Cancel transaction",
-          payload: "cancel"
-        }
-      ]
-      }
-    }
-  }
-};
-
-const requestXEM = {
-  attachment: {
-    type: 'template',
-    payload: {
-      template_type: 'generic',
-      elements: {
-        title: "Confirm transaction:",
-        subtitle: `Request XXX XEM from XXX`,
-        buttons: [{
-          type: "postback",
-          title: "Request XEM",
-          payload: "request"
-        },{
-          type: "postback",
-          title: "Cancel transaction",
-          payload: "cancel"
-        }
-      ]
-      }
-    }
-  }
-};
-
-const help = {
-  text: 'Try writing like this: "send 100 XEM to John Doe", or "Request 100 XEM from Jane Doe". ',
-};
-
-const greeting = {
-  text: 'Hi there!\nTry "send 100 XEM to John Doe", or "Request 100 XEM from Jane Doe". ',
-};
-
-const couldNotParse = {
-  text: 'Sorry, I do not understand what you wrote. Please try again!\nTry "send 100 XEM to John Doe", or "Request 100 XEM from Jane Doe". ',
-};
-
-const sentMSG = {
-  text: 'Payment sent',
-};
-
-const requestMSG = {
-  text: 'Request sent',
-};
-
-const cancelTransaction = {
-  text: 'Payment canceled',
-};
 
 export default {
   createAccountMessage,
@@ -202,12 +130,4 @@ export default {
   loggedInMessage,
   napMessage,
   getStarted,
-  sendXEM,
-  requestXEM,
-  help,
-  greeting,
-  couldNotParse,
-  sentMSG,
-  requestMSG,
-  cancelTransaction,
 };
