@@ -176,7 +176,7 @@ function handleMessage(sender_psid, received_message,msg_nlp) {
               "buttons":[
                 {
                   "type": "account_link",
-                  "url": "https://nemsocialwallet.herokuapp.com/"
+                  "url": "https://folk.ntnu.no/matsjsk/authorize"
                 }
               ]
             }
