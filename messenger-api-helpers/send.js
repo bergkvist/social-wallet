@@ -64,8 +64,8 @@ const sendLoggedOutWelcomeMessage = (recipientId) => {
   sendMessage(
     recipientId, [
       {
-        text: 'Hi! 👋 Welcome to Jasper’s Market!'
-          + ' (Messenger Platform Account Linking demo)',
+        text: 'Welcome to the NEM SocialWallet!'
+          + ' (NEM Global Hackathon project 2018)',
       },
       messages.createAccountMessage,
     ]

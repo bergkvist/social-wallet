@@ -32,7 +32,7 @@ const createAccountMessage = {
     type: 'template',
     payload: {
       template_type: 'button',
-      text: 'Ready to do this? You’ll need to log in to your Jasper’s account so I can access your past orders.',
+      text: 'Please sign in to start sending and recieving XEM.',
       buttons: [signInButton],
     },
   },
@@ -61,7 +61,7 @@ const signInSuccessMessage = {
     type: 'template',
     payload: {
       template_type: 'button',
-      text: 'Now you’ll have full access to your order history and shopping list.',
+      text: 'Now you’re ready to start transacting! Log out at any time using the button below.',
       buttons: [signOutButton],
     },
   },
@@ -75,7 +75,7 @@ const signOutSuccessMessage = {
     type: 'template',
     payload: {
       template_type: 'button',
-      text: 'You’ve been logged out of your Jasper’s account.',
+      text: 'You’ve been logged out of your SoW account.',
       buttons: [signInButton],
     },
   },
@@ -104,7 +104,7 @@ const loggedInMessage = (username) => {
  * Fun message for saying hello to a signed in user.
  */
 const napMessage = {
-  text: 'Oh hey there! I was just napping while you were gone 😴. But I’m awake now!',
+  text: 'Welcome back!',
 };
 
 /**
