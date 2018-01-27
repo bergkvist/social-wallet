@@ -97,7 +97,7 @@ const handleReceiveMessage = (event) => {
 
   parseMessage.determineIntent(nlp,senderId);
   
-  if (message.text) { sendApi.sendWelcomeMessage(senderId); }
+  //if (message.text) { sendApi.sendWelcomeMessage(senderId); }
 };
 
 export default {
