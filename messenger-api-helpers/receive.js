@@ -11,6 +11,9 @@ import sendApi from './send';
 // ===== STORES ================================================================
 import UserStore from '../stores/user_store';
 
+// ===== NLP ================================================================
+import parseMessage from '../nlp/parse';
+
 /*
  * Account Link Event - This event is called when the Link Account
  * or Unlink Account action has been tapped. Read More at:
@@ -64,6 +67,12 @@ const handleReceivePostback = (event) => {
   case 'GET_STARTED':
     sendApi.sendWelcomeMessage(senderId);
     break;
+  case 'send':
+    sendApi.sendPaymentSentMessage(senderId);
+    break;
+  case 'cancel':
+    sendApi.sendCancelPaymentMessage(senderId);
+    break;
   default:
     console.error(`Unknown Postback called: ${type}`);
     break;
@@ -79,12 +88,15 @@ const handleReceivePostback = (event) => {
 const handleReceiveMessage = (event) => {
   const message = event.message;
   const senderId = event.sender.id;
+  const nlp = event.message.nlp;
 
   // It's good practice to send the user a read receipt so they know
   // the bot has seen the message. This can prevent a user
   // spamming the bot if the requests take some time to return.
   sendApi.sendReadReceipt(senderId);
 
+  parseMessage.determineIntent(nlp,senderId);
+  
   if (message.text) { sendApi.sendWelcomeMessage(senderId); }
 };
 

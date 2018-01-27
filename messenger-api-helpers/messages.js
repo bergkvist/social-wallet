@@ -23,6 +23,25 @@ const signInButton = {
  */
 const signOutButton = {type: 'account_unlink'};
 
+const sendPaymentButton = {
+  type: 'postback',
+  title: 'Send XEM',
+  payload: 'send'
+};
+
+const requestPaymentButton = {
+  type: 'postback',
+  title: 'Request XEM',
+  payload: 'request'
+};
+
+const cancelTransactionButton = {
+  type: 'postback',
+  title: 'Cancel',
+  payload: 'cancel'
+};
+
+
 /**
  * Message that informs the user the must sign in and prompts
  * them to set link their account.
@@ -101,7 +120,7 @@ const loggedInMessage = (username) => {
 };
 
 /**
- * Fun message for saying hello to a signed in user.
+ * Saying hello to a signed in user.
  */
 const napMessage = {
   text: 'Welcome back!',
@@ -122,6 +141,22 @@ const getStarted = {
   ],
 };
 
+/**
+ * Send buttons for transacting   TODO: IMPLEMENT ADRESS BOOK CHECK
+ */
+const sendXEM = (username, amount, target) => {
+  return {
+    attachment: {
+      type: 'template',
+      payload: {
+        template_type: 'generic',
+        text: `Send ${amount} XEM to ${target}`,
+        buttons: [sendPaymentButton, cancelTransactionButton],
+      },
+    },
+  };
+};
+
 export default {
   createAccountMessage,
   signInGreetingMessage,
@@ -130,4 +165,5 @@ export default {
   loggedInMessage,
   napMessage,
   getStarted,
+  sendXEM
 };

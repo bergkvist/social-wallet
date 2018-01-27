@@ -118,10 +118,42 @@ const sendReadReceipt = (recipientId) => {
   api.callMessagesAPI(messageData);
 };
 
+const sendPaymentSentMessage = (recipientId) => {
+  sendMessage(
+    recipientId, [
+      {
+        text: 'Payment sent.'
+      },
+    ]
+  );
+};
+
+const sendCancelPaymentMessage = (recipientId) => {
+  sendMessage(
+    recipientId, [
+      {
+        text: 'Payment canceled.'
+      },
+    ]
+  );
+};
+
+// Send a transaction confirmation.
+const sendTransactionConfirmation = (recipientId, amount, target) => {
+  sendMessage(
+    recipientId,
+    [
+      messages.sendXEM(recipientId,amount,target),
+    ]);
+};
+
 export default {
   sendMessage,
   sendWelcomeMessage,
   sendSignOutSuccessMessage,
   sendSignInSuccessMessage,
   sendReadReceipt,
+  sendPaymentSentMessage,
+  sendCancelPaymentMessage,
+  sendTransactionConfirmation,
 };
