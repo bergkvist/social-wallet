@@ -150,7 +150,8 @@ const sendXEM = (username, amount, target) => {
       type: 'template',
       payload: {
         template_type: 'generic',
-        text: `Send ${amount} XEM to ${target}`,
+        title: 'Confirm Transaction:',
+        subtitle: `Send ${amount} XEM to ${target}`,
         buttons: [sendPaymentButton, cancelTransactionButton],
       },
     },
@@ -165,5 +166,5 @@ export default {
   loggedInMessage,
   napMessage,
   getStarted,
-  sendXEM
+  sendXEM,
 };
