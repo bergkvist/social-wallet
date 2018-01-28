@@ -47,5 +47,6 @@ const determineIntent = (nlpInfo,senderId) => {
 }
 
 export default {
+determineNLP,
 determineIntent,
 };
