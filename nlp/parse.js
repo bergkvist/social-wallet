@@ -31,6 +31,7 @@ const determineIntent = (nlpInfo,senderId) => {
         
     default:
     // HELP RESPONSE
+        send.sendHelpMessage(senderId);
         break;
     }
 }

@@ -167,6 +167,16 @@ const sendSignOutPrompt = (recipientId) => {
   );
 }
 
+//Request more information from user
+const sendHelpMessage = (recipientId) => {
+  sendMessage(
+    recipientId,
+    [
+      messages.helpMessage(),
+    ]
+  );
+}
+
 export default {
   sendMessage,
   sendWelcomeMessage,
@@ -178,4 +188,5 @@ export default {
   sendTransactionConfirmation,
   sendMoreInfoMessage,
   sendSignOutPrompt,
+  sendHelpMessage,
 };
