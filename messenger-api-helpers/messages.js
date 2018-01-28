@@ -42,7 +42,7 @@ const requestPaymentButton = {
 const cancelTransactionButton = {
   type: 'postback',
   title: 'Cancel',
-  payload: JOSN.stringify(
+  payload: JSON.stringify(
     {type: 'cancel'}
   )
 };
