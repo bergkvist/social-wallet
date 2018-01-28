@@ -152,17 +152,17 @@ const sendMoreInfoMessage = (recipientId) => {
   sendMessage(
     recipientId,
     [
-      messages.moreInfoMessage(recipientId)
+      messages.moreInfoMessage,
     ]
   );
 }
 
 //Send logout button
-const sendsignOutPrompt = (recipientId) => {
+const sendSignOutPrompt = (recipientId) => {
   sendMessage(
     recipientId,
     [
-      messages.signOutPrompt()
+      messages.signOutPrompt,
     ]
   );
 }
@@ -177,5 +177,5 @@ export default {
   sendCancelPaymentMessage,
   sendTransactionConfirmation,
   sendMoreInfoMessage,
-  sendsignOutPrompt,
+  sendSignOutPrompt,
 };
