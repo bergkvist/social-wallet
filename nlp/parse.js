@@ -1,13 +1,13 @@
 import send from '../messenger-api-helpers/send';
 
 const determineIntent = (nlpInfo,senderId) => {
-    const intent = JSON.stringify(nlpInfo["intent"]);
+    const intent = nlpInfo["intent"][0]["value"];
     console.log("hei: " + intent);
     switch (intent) {
     case 'send':
         if (nlpInfo["number"] && nlpInfo["contact"]){
             console.log("hoe");
-            send.sendTransactionConfirmation(senderId, nlpInfo["number"], nlpInfo["contact"]);
+            send.sendTransactionConfirmation(senderId, nlpInfo["number"][0]["value"], nlpInfo["contact"][0]["value"]);
         } else {
             //Send please include all information message.
         }
