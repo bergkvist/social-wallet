@@ -26,7 +26,7 @@ const determineIntent = (nlpInfo,senderId) => {
         break;
 
     case 'logout':
-        send.sendsignOutPrompt(senderId);
+        send.sendSignOutPrompt(senderId);
         break;
         
     default:

@@ -162,7 +162,7 @@ const sendSignOutPrompt = (recipientId) => {
   sendMessage(
     recipientId,
     [
-      messages.signOutPrompt,
+      messages.signOutPrompt(),
     ]
   );
 }
