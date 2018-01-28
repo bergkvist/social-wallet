@@ -12,6 +12,8 @@ import uuid from 'uuid';
 // ===== STORES ================================================================
 import UserStore from '../stores/user_store';
 
+import api from '../messenger-api-helpers/api';
+
 const router = express.Router();
 
 const linkAccountToMessenger = (res, username, redirectURI) => {
@@ -92,6 +94,9 @@ router.get('/login', function(req, res) {
   const accountLinkingToken = req.query.account_linking_token;
 
   const redirectURI = req.query.redirect_uri;
+
+  console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX "+accountLinkingToken);
+
 
   res.render('login', {accountLinkingToken, redirectURI});
 });

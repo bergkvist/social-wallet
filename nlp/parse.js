@@ -24,7 +24,7 @@ const determineIntent = (nlpInfo,senderId) => {
         break;
 
     case 'request':
-        if (nlpInfo["number"] && nlpInfo["contact"]){
+        if (nlpInfo["number"] && nlpInfo["contact"]){ // TODO: REQUEST PAYMENT
 
         } else {
             //Send please include all information message.
