@@ -88,14 +88,13 @@ const handleReceivePostback = (event) => {
 const handleReceiveMessage = (event) => {
   const message = event.message;
   const senderId = event.sender.id;
-  const nlp = event.message.nlp.entities;
 
   // It's good practice to send the user a read receipt so they know
   // the bot has seen the message. This can prevent a user
   // spamming the bot if the requests take some time to return.
   sendApi.sendReadReceipt(senderId);
 
-  parseMessage.determineIntent(nlp,senderId);
+  parseMessage.determineNLP(message,senderId);
   
   //if (message.text) { sendApi.sendWelcomeMessage(senderId); }
 };
