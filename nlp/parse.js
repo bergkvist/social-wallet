@@ -2,7 +2,7 @@ import send from '../messenger-api-helpers/send';
 
 const determineNLP = (message, senderId) =>{
     if (message.nlp.entities){
-        const nlp = event.message.nlp.entities;
+        const nlp = message.nlp.entities;
         determineIntent(nlp,senderId);
     }else {
         send.sendHelpMessage(senderId);
