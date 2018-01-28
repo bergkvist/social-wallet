@@ -88,7 +88,7 @@ const handleReceivePostback = (event) => {
 const handleReceiveMessage = (event) => {
   const message = event.message;
   const senderId = event.sender.id;
-  const nlp = event.message.nlp;
+  const nlp = event.message.nlp.entities;
 
   // It's good practice to send the user a read receipt so they know
   // the bot has seen the message. This can prevent a user
