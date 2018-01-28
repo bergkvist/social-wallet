@@ -162,7 +162,7 @@ const sendSignOutPrompt = (recipientId) => {
   sendMessage(
     recipientId,
     [
-      messages.signOutPrompt(),
+      messages.signOutPrompt,
     ]
   );
 }
@@ -172,7 +172,7 @@ const sendHelpMessage = (recipientId) => {
   sendMessage(
     recipientId,
     [
-      messages.helpMessage(),
+      messages.helpMessage,
     ]
   );
 }
