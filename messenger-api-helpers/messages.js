@@ -174,6 +174,23 @@ const moreInfoMessage = {
   text: 'Make sure you include action to do, amount of XEM, and recipient in your message.\n\r For example "Send 100 XEM to John Doe".',
 };
 
+/**
+ * Message that informs the user they've been succesfully logged in.
+ *
+ * @param {String} username System username of the currently logged in user
+ * @returns {Object} Message payload
+ */
+const signOutPrompt = {
+  attachment: {
+    type: 'template',
+    payload: {
+      template_type: 'button',
+      text: 'Log out using the button below.',
+      buttons: [signOutButton],
+    },
+  },
+};
+
 export default {
   createAccountMessage,
   signInGreetingMessage,
@@ -184,4 +201,5 @@ export default {
   getStarted,
   sendXEM,
   moreInfoMessage,
+  signOutPrompt,
 };

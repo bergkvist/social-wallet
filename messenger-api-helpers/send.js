@@ -147,11 +147,22 @@ const sendTransactionConfirmation = (recipientId, amount, target) => {
     ]);
 };
 
+//Request more information from user
 const sendMoreInfoMessage = (recipientId) => {
   sendMessage(
     recipientId,
     [
       messages.moreInfoMessage(recipientId)
+    ]
+  );
+}
+
+//Send logout button
+const sendsignOutPrompt = (recipientId) => {
+  sendMessage(
+    recipientId,
+    [
+      messages.signOutPrompt()
     ]
   );
 }
@@ -166,4 +177,5 @@ export default {
   sendCancelPaymentMessage,
   sendTransactionConfirmation,
   sendMoreInfoMessage,
+  sendsignOutPrompt,
 };

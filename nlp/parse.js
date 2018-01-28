@@ -18,7 +18,15 @@ const determineIntent = (nlpInfo,senderId) => {
 
         } else {
             //Send please include all information message.
+            send.sendMoreInfoMessage(senderId);
         }
+        break;
+    case 'login':
+        send.sendWelcomeMessage(senderId);
+        break;
+
+    case 'logout':
+        send.sendsignOutPrompt(senderId);
         break;
         
     default:
