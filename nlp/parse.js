@@ -1,7 +1,7 @@
 import send from '../messenger-api-helpers/send';
 
 const determineIntent = (nlpInfo,senderId) => {
-    const intent = nlpInfo["intent"];
+    const intent = JSON.stringify(nlpInfo["intent"]);
     console.log("hei: " + intent);
     switch (intent) {
     case 'send':
