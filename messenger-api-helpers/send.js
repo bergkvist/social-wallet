@@ -147,6 +147,15 @@ const sendTransactionConfirmation = (recipientId, amount, target) => {
     ]);
 };
 
+const sendMoreInfoMessage = (recipientId) => {
+  sendMessage(
+    recipientId,
+    [
+      messages.moreInfoMessage(recipientId)
+    ]
+  );
+}
+
 export default {
   sendMessage,
   sendWelcomeMessage,
@@ -156,4 +165,5 @@ export default {
   sendPaymentSentMessage,
   sendCancelPaymentMessage,
   sendTransactionConfirmation,
+  sendMoreInfoMessage,
 };

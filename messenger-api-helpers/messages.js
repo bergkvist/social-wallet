@@ -42,7 +42,9 @@ const requestPaymentButton = {
 const cancelTransactionButton = {
   type: 'postback',
   title: 'Cancel',
-  payload: 'cancel'
+  payload: JOSN.stringify(
+    {type: 'cancel'}
+  )
 };
 
 
@@ -164,6 +166,14 @@ const sendXEM = (username, amount, target) => {
   };
 };
 
+/**
+ * Error reply for when a user did not specify all required
+ * fields for a transaction
+ */
+const moreInfoMessage = {
+  text: 'Make sure you include action to do, amount of XEM, and recipient in your message.\n\r For example "Send 100 XEM to John Doe".',
+};
+
 export default {
   createAccountMessage,
   signInGreetingMessage,
@@ -173,4 +183,5 @@ export default {
   napMessage,
   getStarted,
   sendXEM,
+  moreInfoMessage,
 };
