@@ -26,13 +26,17 @@ const signOutButton = {type: 'account_unlink'};
 const sendPaymentButton = {
   type: 'postback',
   title: 'Send XEM',
-  payload: 'send'
+  payload: JSON.stringify(
+    {type: "send"}
+  )
 };
 
 const requestPaymentButton = {
   type: 'postback',
   title: 'Request XEM',
-  payload: 'request'
+  payload: JSON.stringify(
+    {type: "request"}
+  )
 };
 
 const cancelTransactionButton = {
@@ -154,7 +158,7 @@ const sendXEM = (username, amount, target) => {
           title: 'Confirm Transaction:',
           subtitle: `Send ${amount} XEM to ${target}`,
           buttons: [sendPaymentButton, cancelTransactionButton],
-        }]
+        }],
       },
     },
   };
