@@ -150,9 +150,11 @@ const sendXEM = (username, amount, target) => {
       type: 'template',
       payload: {
         template_type: 'generic',
-        title: 'Confirm Transaction:',
-        subtitle: `Send ${amount} XEM to ${target}`,
-        buttons: [sendPaymentButton, cancelTransactionButton],
+        elements: [{
+          title: 'Confirm Transaction:',
+          subtitle: `Send ${amount} XEM to ${target}`,
+          buttons: [sendPaymentButton, cancelTransactionButton],
+        }]
       },
     },
   };
