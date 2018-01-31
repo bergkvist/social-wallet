@@ -9,48 +9,17 @@
 import sendApi from './send';
 
 // ===== STORES ================================================================
-import UserStore from '../stores/user_store';
+import db from '../models';
 
 // ===== NLP ================================================================
 import parseMessage from '../nlp/parse';
-
-/*
- * Account Link Event - This event is called when the Link Account
- * or Unlink Account action has been tapped. Read More at:
- * https://developers.facebook.com/docs/messenger-platform/
- * webhook-reference/account-linking
- */
-const handleReceiveAccountLink = (event) => {
-  const senderId = event.sender.id;
-
-  /* eslint-disable camelcase */
-  const status = event.account_linking.status;
-  const authCode = event.account_linking.authorization_code;
-  /* eslint-enable camelcase */
-
-  console.log('Received account link event with for user %d with status %s ' +
-    'and auth code %s ', senderId, status, authCode);
-
-  switch (status) {
-  case 'linked':
-    const linkedUser = UserStore.replaceAuthToken(authCode, senderId);
-    sendApi.sendSignInSuccessMessage(senderId, linkedUser.username);
-    break;
-  case 'unlinked':
-    UserStore.unlinkMessengerAccount(senderId);
-    sendApi.sendSignOutSuccessMessage(senderId);
-    break;
-  default:
-    break;
-  }
-};
 
 /*
  * handleReceivePostback — Postback event handler triggered by a postback
  * action you, the developer, specify on a button in a template. Read more at:
  * developers.facebook.com/docs/messenger-platform/webhook-reference/postback
  */
-const handleReceivePostback = (event) => {
+const handleReceivePostback = async (event) => {
   /**
    * The 'payload' param is a developer-defined field which is
    * set in a postbackbutton for Structured Messages.
@@ -59,7 +28,8 @@ const handleReceivePostback = (event) => {
    * actions to be a string that represents a JSON object
    * containing `type` and `data` properties. EG:
    */
-  const {type} = JSON.parse(event.postback.payload);
+  const payload = await JSON.parse(event.postback.payload);
+  const { type } = payload;
   const senderId = event.sender.id;
 
   // Perform an action based on the type of payload received.
@@ -68,7 +38,13 @@ const handleReceivePostback = (event) => {
     sendApi.sendWelcomeMessage(senderId);
     break;
   case 'send':
-    sendApi.sendPaymentSentMessage(senderId);
+  console.log('"""""""""""""""""""""""""""""""""""""');
+  console.log(payload);
+    const { receiverId, amount } = payload;
+    const fromUser = await db.Users.getByMessengerId(senderId);
+    const toUser = await db.Users.getByMessengerId(receiverId);
+    const result = await fromUser.sendXEM(amount, toUser, senderId);
+    sendApi.sendPaymentSentMessage(senderId, result);
     break;
   case 'cancel':
     sendApi.sendCancelPaymentMessage(senderId);
@@ -94,13 +70,10 @@ const handleReceiveMessage = (event) => {
   // spamming the bot if the requests take some time to return.
   sendApi.sendReadReceipt(senderId);
 
-  parseMessage.determineNLP(message,senderId);
-  
-  //if (message.text) { sendApi.sendWelcomeMessage(senderId); }
+  parseMessage.determineNLP(message, senderId);
 };
 
 export default {
-  handleReceiveAccountLink,
   handleReceiveMessage,
   handleReceivePostback,
 };

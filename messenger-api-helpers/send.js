@@ -7,14 +7,18 @@
 
 // ===== LODASH ================================================================
 import castArray from 'lodash/castArray';
-import isEmpty from 'lodash/isEmpty';
 
 // ===== MESSENGER =============================================================
 import api from './api';
 import messages from './messages';
 
 // ===== STORES ================================================================
-import UserStore from '../stores/user_store';
+import db from '../models';
+import graphApi from '../graph-api';
+import request from 'request-promise';
+
+
+
 
 // Turns typing indicator on.
 const typingOn = (recipientId) => {
@@ -59,6 +63,26 @@ const sendMessage = (recipientId, messagePayloads) => {
     ]);
 };
 
+const sendUserAddress = (recipientId, address) => {
+  sendMessage(
+    recipientId, [{
+      text: `Your NEM address is ${address}`
+    }]
+  )
+}
+
+const sendUserBalance = (recipientId, balance) => {
+  sendMessage(
+    recipientId, [{
+      text: `Your balance is ${balance} XEM`
+    }]
+  )
+}
+
+const unableToFindUser = recipientId => {
+  sendMessage(recipientId, [{ text: 'Could not find any users with the specified name' }]);
+}
+
 // Send a welcome message for a non signed-in user.
 const sendLoggedOutWelcomeMessage = (recipientId) => {
   sendMessage(
@@ -83,10 +107,10 @@ const sendLoggedInWelcomeMessage = (recipientId, username) => {
 };
 
 // Send a different Welcome message based on if the user is logged in.
-const sendWelcomeMessage = (recipientId) => {
-  const userProfile = UserStore.getByMessengerId(recipientId);
-  if (!isEmpty(userProfile)) {
-    sendLoggedInWelcomeMessage(recipientId, userProfile.username);
+const sendWelcomeMessage = async (recipientId) => {
+  const user = await db.Users.getByMessengerId(recipientId);
+  if (user === null) {
+    sendLoggedInWelcomeMessage(recipientId, userData.first_name);
   } else {
     sendLoggedOutWelcomeMessage(recipientId);
   }
@@ -118,13 +142,13 @@ const sendReadReceipt = (recipientId) => {
   api.callMessagesAPI(messageData);
 };
 
-const sendPaymentSentMessage = (recipientId) => {
+const sendPaymentSentMessage = (recipientId, result) => {
   sendMessage(
-    recipientId, [
-      {
-        text: 'Payment sent.'
-      },
-    ]
+    recipientId, [{ 
+      text: ''
+      + `message: ${result.message}\u000A\u000A`
+      + `transactionHash: ${result.transactionHash.data}`
+    }]
   );
 };
 
@@ -139,12 +163,10 @@ const sendCancelPaymentMessage = (recipientId) => {
 };
 
 // Send a transaction confirmation.
-const sendTransactionConfirmation = (recipientId, amount, target) => {
-  sendMessage(
-    recipientId,
-    [
-      messages.sendXEM(recipientId,amount,target),
-    ]);
+const sendTransactionConfirmation = async (recipientUser, amount) => {
+  const message = await messages.sendXEM(recipientUser, amount);
+  const recipient = await recipientUser.messengerId;
+  sendMessage(recipient, message);
 };
 
 //Request more information from user
@@ -189,4 +211,7 @@ export default {
   sendMoreInfoMessage,
   sendSignOutPrompt,
   sendHelpMessage,
+  sendUserAddress,
+  sendUserBalance,
+  unableToFindUser,
 };

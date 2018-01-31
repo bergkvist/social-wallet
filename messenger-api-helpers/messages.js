@@ -23,13 +23,19 @@ const signInButton = {
  */
 const signOutButton = {type: 'account_unlink'};
 
-const sendPaymentButton = {
-  type: 'postback',
-  title: 'Send XEM',
-  payload: JSON.stringify(
-    {type: "send"}
-  )
-};
+
+const sendPaymentButton = (amount, receiverId) => {
+  return {
+    type: 'postback',
+    title: 'Send XEM',
+    payload: JSON.stringify({
+        type: 'send',
+        amount,
+        receiverId,
+    })
+  };
+}
+
 
 const requestPaymentButton = {
   type: 'postback',
@@ -150,20 +156,33 @@ const getStarted = {
 /**
  * Send buttons for transacting   TODO: IMPLEMENT ADRESS BOOK CHECK
  */
-const sendXEM = (username, amount, target) => {
-  return {
+const sendXEM = async (recipientUser, amount) => {
+  const recipientName = `${recipientUser.firstname} ${recipientUser.lastname}`;
+  const recipientAddress = await recipientUser.address();
+  const recipientId = recipientUser.messengerId;
+  return  [{
+    attachment: {
+      type: 'template',
+      payload: {
+        template_type: 'open_graph',
+        elements: [{
+          url: `https://www.facebook.com/${recipientUser.facebookId}`,
+        }],
+      },
+    },
+  },{
     attachment: {
       type: 'template',
       payload: {
         template_type: 'generic',
         elements: [{
           title: 'Confirm Transaction:',
-          subtitle: `Send ${amount} XEM to ${target}`,
-          buttons: [sendPaymentButton, cancelTransactionButton],
+          subtitle: `Send ${amount} XEM to ${recipientName} \n\n(${recipientAddress})`,
+          buttons: [await sendPaymentButton(amount, recipientId), cancelTransactionButton],
         }],
       },
     },
-  };
+  }];
 };
 
 /**

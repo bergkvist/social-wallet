@@ -11,6 +11,8 @@ import express from 'express';
 // ===== MESSENGER =============================================================
 import receiveApi from '../messenger-api-helpers/receive';
 
+import db from '../models';
+
 const router = express.Router();
 
 /**
@@ -22,7 +24,9 @@ const router = express.Router();
  */
 router.get('/', (req, res) => {
   if (req.query['hub.verify_token'] === process.env.WEBHOOK_TOKEN) {
-    res.send(req.query['hub.challenge']);
+    const challenge = req.query['hub.challenge'];
+    console.log(challenge)
+    res.send(challenge);
   } else {
     res.send('Error, wrong token');
   }
@@ -63,19 +67,22 @@ router.post('/', (req, res) => {
         return;
       }
       // Iterate over each messaging event
-      pageEntry.messaging.forEach((messagingEvent) => {
-        console.log({messagingEvent});
+      pageEntry.messaging.forEach(async (messagingEvent) => {
+        console.log({ messagingEvent });
+        
+        // Create user if none exists:
+        const messengerId = messagingEvent.sender.id;
+        const user = await db.Users.getByMessengerId(messengerId);
+        if (user === null) await db.Users.create({ messengerId });
+
         if (messagingEvent.message) {
           receiveApi.handleReceiveMessage(messagingEvent);
-        } else if (messagingEvent.account_linking) { // eslint-disable-line camelcase, max-len
-          receiveApi.handleReceiveAccountLink(messagingEvent);
+
         } if (messagingEvent.postback) {
           receiveApi.handleReceivePostback(messagingEvent);
+
         } else {
-          console.error(
-            'Webhook received unknown messagingEvent: ',
-            messagingEvent
-          );
+          console.error('Webhook received unknown messagingEvent: ', messagingEvent);
         }
       });
     });

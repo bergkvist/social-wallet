@@ -12,6 +12,7 @@ import isEmpty from 'lodash/isEmpty';
 // ===== MODULES ===============================================================
 import request from 'request';
 
+// ===== ENVIRONMENT VARIABLES =================================================
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 /**
