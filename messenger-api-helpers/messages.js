@@ -156,6 +156,7 @@ const getStarted = {
 /**
  * Send buttons for transacting   TODO: IMPLEMENT ADRESS BOOK CHECK
  */
+
 const sendXEM = async (recipientUser, amount) => {
   const recipientName = `${recipientUser.firstname} ${recipientUser.lastname}`;
   const recipientAddress = await recipientUser.address();

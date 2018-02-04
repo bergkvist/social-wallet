@@ -7,32 +7,12 @@ const determineNLP = (message, senderId) => {
     if ('intent' in nlp) {
         determineIntent(nlp, senderId);
     } else {
-        determineCommand(message.text, senderId);
-    }
-}
-
-const determineCommand = async (command, senderId) => {
-    const user = await db.Users.getByMessengerId(senderId);
-    switch (command) {
-    case 'address':
-        const address = await user.address();
-        send.sendUserAddress(senderId, address);
-        break;
-    
-    case 'balance':
-        const defaultWallet = await user.defaultWallet();
-        const balance = await defaultWallet.balance();
-        send.sendUserBalance(senderId, balance);
-        break;
-    
-    default:
-        console.log('"""""""""""""""""""""""""""');
-        console.log('Unable to recognice command');
-        console.log('"""""""""""""""""""""""""""');
+        send.sendHelpMessage(senderId);
     }
 }
 
 const determineIntent = async (nlpInfo, senderId) => {
+    const user = await db.Users.getByMessengerId(senderId);
     const intent = nlpInfo["intent"][0]["value"];
     switch (intent) {
     case 'send':
@@ -54,6 +34,21 @@ const determineIntent = async (nlpInfo, senderId) => {
             //Send please include all information message.
             send.sendMoreInfoMessage(senderId);
         }
+        break;
+
+    case 'address':
+        const address = await user.address();
+        send.sendUserAddress(senderId, address);
+        break;
+    
+    case 'balance':
+        const defaultWallet = await user.defaultWallet();
+        const balance = await defaultWallet.balance();
+        send.sendUserBalance(senderId, balance);
+        break;
+
+    case 'login':
+        send.sendSignInPrompt(senderId);
         break;
 
     default:

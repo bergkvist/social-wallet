@@ -89,28 +89,26 @@ const sendLoggedOutWelcomeMessage = (recipientId) => {
     recipientId, [
       {
         text: 'Welcome to the NEM SocialWallet!'
-          + ' (NEM Global Hackathon project 2018)',
+          + ' (NEM Global Hackathon project 2018)\rSend XEM using natural language! Type "Help" for instructions.',
       },
-      messages.createAccountMessage,
     ]
   );
 };
 
 // Send a welcome message for a signed in user.
-const sendLoggedInWelcomeMessage = (recipientId, username) => {
+const sendLoggedInWelcomeMessage = (recipientId) => {
   sendMessage(
     recipientId,
     [
       messages.napMessage,
-      messages.loggedInMessage(username),
     ]);
 };
 
 // Send a different Welcome message based on if the user is logged in.
 const sendWelcomeMessage = async (recipientId) => {
   const user = await db.Users.getByMessengerId(recipientId);
-  if (user === null) {
-    sendLoggedInWelcomeMessage(recipientId, userData.first_name);
+  if (user) {
+    sendLoggedInWelcomeMessage(recipientId);
   } else {
     sendLoggedOutWelcomeMessage(recipientId);
   }
@@ -176,7 +174,7 @@ const sendMoreInfoMessage = (recipientId) => {
       messages.moreInfoMessage,
     ]
   );
-}
+};
 
 //Send logout button
 const sendSignOutPrompt = (recipientId) => {
@@ -186,7 +184,17 @@ const sendSignOutPrompt = (recipientId) => {
       messages.signOutPrompt,
     ]
   );
-}
+};
+
+//Send login button
+const sendSignInPrompt = (recipientId) => {
+  sendMessage(
+    recipientId,
+    [
+      messages.createAccountMessage,
+    ]
+  );
+};
 
 //Request more information from user
 const sendHelpMessage = (recipientId) => {
@@ -196,7 +204,7 @@ const sendHelpMessage = (recipientId) => {
       messages.helpMessage,
     ]
   );
-}
+};
 
 export default {
   sendMessage,
@@ -213,4 +221,5 @@ export default {
   sendUserAddress,
   sendUserBalance,
   unableToFindUser,
+  sendSignInPrompt,
 };

@@ -23,6 +23,7 @@ import ThreadSetup from './messenger-api-helpers/thread-setup';
 // ===== ROUTES ================================================================
 import index from './routes/index';
 import webhooks from './routes/webhooks';
+import users from './routes/users';
 
 const app = express();
 
@@ -62,6 +63,7 @@ app.use(logger('dev'));
 
 app.use('/', index);
 app.use('/webhook', webhooks);
+app.use('/users', users);
 
 /* ----------  Errors  ---------- */
 
