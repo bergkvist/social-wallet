@@ -64,8 +64,14 @@ export default (sequelize, DataTypes) => {
     Wallets.prototype.sendXEM = async function(amount, recipient, password) {
         const common = this.decrypt(password);
         const transferTransaction = nem.model.objects.create('transferTransaction')(recipient, amount);
+        console.log('""""""""""""""""""" TRANSFER TRANSACTION');
+        console.log(transferTransaction);
         const transactionEntity = nem.model.transactions.prepare('transferTransaction')(common, transferTransaction, networkId);
+        console.log('""""""""""""""""""" TRANSACTION ENTITY');
+        console.log(transactionEntity);
         const broadcastedTransactionPromise = nem.model.transactions.send(common, transactionEntity, endpoint);
+        console.log('""""""""""""""""""" BROADCASTED TRANSACTION PROMISE');
+        console.log(await broadcastedTransactionPromise);
         return broadcastedTransactionPromise;
     }
 

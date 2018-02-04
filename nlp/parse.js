@@ -40,7 +40,7 @@ const determineIntent = async (nlpInfo, senderId) => {
             const amount = nlpInfo["number"][0]["value"];
             const recipientName = nlpInfo["contact"][0]["value"];
             const recipientUser = await db.Users.findOne({where: { firstname: recipientName }});
-            if (recipientUser !== null) send.sendTransactionConfirmation(recipientUser, amount);
+            if (recipientUser !== null) send.sendTransactionConfirmation(recipientUser, amount, senderId);
             else send.unableToFindUser(senderId);
         } else {
             //Send please include all information message.

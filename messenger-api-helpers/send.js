@@ -163,10 +163,9 @@ const sendCancelPaymentMessage = (recipientId) => {
 };
 
 // Send a transaction confirmation.
-const sendTransactionConfirmation = async (recipientUser, amount) => {
+const sendTransactionConfirmation = async (recipientUser, amount, senderId) => {
   const message = await messages.sendXEM(recipientUser, amount);
-  const recipient = await recipientUser.messengerId;
-  sendMessage(recipient, message);
+  sendMessage(senderId, message);
 };
 
 //Request more information from user
